@@ -1,13 +1,13 @@
 import React from "react";
 
 import { SideBlock } from "./SideBlock";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
+import {ListItem} from "@mui/material";
+import {ListItemAvatar} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import ListItemText from "@mui/material/ListItemText";
+import {ListItemText} from "@mui/material";
 import Divider from "@mui/material/Divider";
-import List from "@mui/material/List";
-import Skeleton from "@mui/material/Skeleton";
+import { List } from "@mui/material";
+import {Skeleton} from "@mui/material";
 
 export const CommentsBlock = ({ items, children, isLoading = true }) => {
   return (

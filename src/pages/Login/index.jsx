@@ -13,6 +13,8 @@ import { Navigate } from "react-router-dom";
 import styles from "./Login.module.scss";
 
 export const Login = () => {
+  
+
   const isAuth = useSelector(selectIsAuth)
   const dispatch = useDispatch()
   const {
@@ -49,7 +51,7 @@ if(isAuth) {
 }
 
   return (
-    <Paper classes={{ root: styles.root }}>
+    <Paper classes={{ root: styles.root }} >
       <Typography classes={{ root: styles.title }} variant="h5">
         Вход в аккаунт
       </Typography>

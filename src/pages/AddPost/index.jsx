@@ -1,6 +1,6 @@
 import React from 'react';
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
+import {TextField} from '@mui/material';
+import { Paper } from '@mui/material';
 import Button from '@mui/material/Button';
 import SimpleMDE from 'react-simplemde-editor';
 import { useSelector } from 'react-redux';
@@ -12,6 +12,7 @@ import axios from '../../axios';
 
 
 export const AddPost = () => {
+  
   const navigate = useNavigate()
   const {id} = useParams()
   // const imageUrl = '';
@@ -109,7 +110,7 @@ export const AddPost = () => {
  
 
   return (
-    <Paper style={{ padding: 30 }}>
+    <Paper style={{ padding: 30 }} >
       <Button onClick={()=> inputFileRef.current.click()} variant="outlined" size="large">
         Загрузить превью
       </Button>

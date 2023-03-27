@@ -12,6 +12,7 @@ import { Navigate } from "react-router-dom";
 import {useForm} from 'react-hook-form'
 
 export const Registration = () => {
+  
   const isAuth = useSelector(selectIsAuth)
   const dispatch = useDispatch()
   const {
@@ -49,7 +50,7 @@ export const Registration = () => {
 
 
   return (
-    <Paper classes={{ root: styles.root }}>
+    <Paper classes={{ root: styles.root }} >
       <Typography classes={{ root: styles.title }} variant="h5">
         Создание аккаунта
       </Typography>
