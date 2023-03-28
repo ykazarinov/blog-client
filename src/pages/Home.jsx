@@ -7,7 +7,7 @@ import {Grid} from '@mui/material';
 import { useNavigate} from "react-router-dom";
 
 
-import { sortBy } from 'lodash';
+import { orderBy } from 'lodash';
 
 
 import { Post } from '../components/Post';
@@ -25,6 +25,8 @@ const isTagsLoading = tags.status === 'loading'
 
 const navigate = useNavigate()
 const [tabIndex, setTabIndex] = React.useState(0);
+const [popularPosts, setPopularPosts] = React.useState([]);
+const [newPosts, setNewPosts] = React.useState([]);
 
 React.useEffect(()=>{
   navigate(`?sortProperty=${tabIndex}`);
@@ -39,17 +41,28 @@ const handleTabChange = (event, newTabIndex) => {
 };
 
 
-let sorted
-if(posts){
-  sorted = sortBy(posts, 'viewsCount');
-}
-console.log(sorted);
+
+
+
 
 
   React.useEffect(()=> {
     dispatch(fetchPosts())
     dispatch(fetchTags())
+    
+   
   }, [])
+
+  React.useEffect(()=>{
+   
+    setPopularPosts(orderBy(posts.items, 'viewsCount', 'desc'))
+    setNewPosts(orderBy(posts.items, 'createdAt', 'desc'))
+      
+  
+    
+  }, [posts])
+
+
 
 
   return (
@@ -62,7 +75,7 @@ console.log(sorted);
         {tabIndex === 0 && (
           <Grid xs={8} item>
           
-            {(isPostLoading ? [...Array(5)]:  posts.items).map((obj, index) => isPostLoading ? <Post key ={index} isLoading={true}/> : (
+            {(isPostLoading && newPosts.length < 1 ? [...Array(5)]: newPosts).map((obj, index) => isPostLoading ? <Post key ={index} isLoading={true}/> : (
               <Post
                 id={obj._id}
                 title={obj.title}
@@ -84,7 +97,7 @@ console.log(sorted);
           
           <Grid xs={8} item>
 
-            {(isPostLoading ? [...Array(5)]:  sorted.items).map((obj, index) => isPostLoading ? <Post key ={index} isLoading={true}/> : (
+            {(isPostLoading && popularPosts.length < 1 ? [...Array(5)]:  popularPosts).map((obj, index) => isPostLoading ? <Post key ={index} isLoading={true}/> : (
               <Post
                 id={obj._id}
                 title={obj.title}
