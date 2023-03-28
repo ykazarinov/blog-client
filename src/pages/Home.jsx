@@ -6,6 +6,7 @@ import {Tab} from '@mui/material';
 import {Grid} from '@mui/material';
 import { useNavigate} from "react-router-dom";
 
+import qs from 'qs';
 
 import { orderBy } from 'lodash';
 
@@ -28,22 +29,47 @@ const [tabIndex, setTabIndex] = React.useState(0);
 const [popularPosts, setPopularPosts] = React.useState([]);
 const [newPosts, setNewPosts] = React.useState([]);
 
-React.useEffect(()=>{
-  navigate(`?sortProperty=${tabIndex}`);
-}, [])
+const urlParams = window.location.search
+
+
+
+// React.useEffect(()=>{
+//   if(urlParams.sortProperty && urlParams.sortProperty === 0){
+//     // navigate(`?sortProperty=${tabIndex}`);
+//     setTabIndex(0)
+//   }else if(urlParams.sortProperty && urlParams.sortProperty === 1){
+//     setTabIndex(1)
+//   }
+//   console.log(urlParams)
+  
+// }, [])
+
+
+React.useEffect(() => {
+
+  if (urlParams) {
+    const params = qs.parse(urlParams.substring(1));
+    setTabIndex(Number(params.sortProperty))
+  }else{
+    navigate(`?sortProperty=${tabIndex}`);
+  }
+
+  
+}, []);
+
+React.useEffect(() => {
+  if(!urlParams){
+    navigate(`?sortProperty=${tabIndex}`);
+  }
+},[urlParams])
+
 
 const handleTabChange = (event, newTabIndex) => {
   setTabIndex(newTabIndex);
-  
-    navigate(`?sortProperty=${newTabIndex}`);
+  navigate(`?sortProperty=${newTabIndex}`);
  
   
 };
-
-
-
-
-
 
 
   React.useEffect(()=> {
@@ -54,13 +80,9 @@ const handleTabChange = (event, newTabIndex) => {
   }, [])
 
   React.useEffect(()=>{
-   
     setPopularPosts(orderBy(posts.items, 'viewsCount', 'desc'))
     setNewPosts(orderBy(posts.items, 'createdAt', 'desc'))
-      
-  
-    
-  }, [posts])
+   }, [posts])
 
 
 
