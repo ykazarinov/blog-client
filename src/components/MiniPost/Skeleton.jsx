@@ -2,7 +2,7 @@ import React from "react";
 import Stack from "@mui/material/Stack";
 import { Skeleton } from "@mui/material";
 
-import styles from "./Post.module.scss";
+import styles from "./MiniPost.module.scss";
 
 export const PostSkeleton = () => {
   return (
