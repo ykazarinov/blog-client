@@ -56,7 +56,7 @@ export const AddPost = () => {
         text,
         imageUrl,
         tags
-        // tags: tags.split(',')
+        // tags: tags.split()
       }
       const {data} = isEditing ? 
       await axios.patch(`/posts/${id}`, fields) :
@@ -76,7 +76,7 @@ export const AddPost = () => {
       axios.get(`/posts/${id}`).then(({data}) => {
         setTitle(data.title)
         setText(data.text)
-        setTags(data.tags.join(','))
+        setTags(data.tags.join(', '))
         setimageUrl(data.imageUrl)
 
       })
