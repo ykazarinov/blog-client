@@ -15,19 +15,23 @@ import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock'; 
 import { CommentsBlock } from '../components/CommentsBlock';
 import { fetchPosts, fetchTags } from '../redux/slices/posts';
+import { fetchLastComments } from '../redux/slices/comments';
 
 export const Home = () => {
 const dispatch = useDispatch()
 const userData = useSelector(state => state.auth.data)
 const {posts, tags} = useSelector(state => state.posts)
+const {comments} = useSelector(state => state.comments)
 
 const isPostLoading = posts.status === 'loading'
 const isTagsLoading = tags.status === 'loading'
+const isCommentsLoading = comments.status === 'loading'
 
 const navigate = useNavigate()
 const [tabIndex, setTabIndex] = React.useState(0);
 const [popularPosts, setPopularPosts] = React.useState([]);
 const [newPosts, setNewPosts] = React.useState([]);
+
 
 const urlParams = window.location.search
 
@@ -63,6 +67,18 @@ React.useEffect(() => {
   }
 },[urlParams])
 
+React.useEffect(()=>{
+  // axios.get(`/posts/${id}/`).then(res => {
+  //   setData(res.data)
+  //   setIsLoading(false)
+  // }).catch(err => {
+  //   console.warn(err)
+  //   alert('Error getting post')
+  // })
+},[])
+
+
+
 
 const handleTabChange = (event, newTabIndex) => {
   setTabIndex(newTabIndex);
@@ -75,6 +91,7 @@ const handleTabChange = (event, newTabIndex) => {
   React.useEffect(()=> {
     dispatch(fetchPosts())
     dispatch(fetchTags())
+    dispatch(fetchLastComments())
     
    
   }, [])
@@ -98,14 +115,14 @@ const handleTabChange = (event, newTabIndex) => {
           <Grid xs={8} item>
           
             {(isPostLoading && newPosts.length < 1 ? [...Array(5)]: newPosts).map((obj, index) => isPostLoading ? <Post key ={index} isLoading={true}/> : (
-              <Post
+              <Post 
                 id={obj._id}
                 title={obj.title}
                 imageUrl={obj.imageUrl ? `http://localhost:4444${obj.imageUrl}`: ''} 
                 user={obj.user}
                 createdAt={obj.createdAt}
                 viewsCount={obj.viewsCount}
-                commentsCount={3}
+                // commentsCount={3}
                 tags={obj.tags}
                 isEditable={userData?._id === obj.user._id}
                 key ={index}
@@ -143,23 +160,8 @@ const handleTabChange = (event, newTabIndex) => {
         <Grid xs={4} item>
           <TagsBlock items={tags.items} isLoading={isTagsLoading} />
           <CommentsBlock
-            items={[
-              {
-                user: {
-                  fullName: 'Вася Пупкин',
-                  avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-                },
-                text: 'Это тестовый комментарий',
-              },
-              {
-                user: {
-                  fullName: 'Иван Иванов',
-                  avatarUrl: 'https://mui.com/static/images/avatar/2.jpg',
-                },
-                text: 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top',
-              },
-            ]}
-            isLoading={false}
+            items={ comments.items  }
+            isLoading={isCommentsLoading}
           />
         </Grid>
       </Grid>

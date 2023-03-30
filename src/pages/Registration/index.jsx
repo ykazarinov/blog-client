@@ -34,8 +34,6 @@ export const Registration = () => {
   })
   const onSubmit = async (values) => {
     values.avatarUrl = `http://localhost:4444${imageUrl}`;
-    // values.avatarUrl = 'http://localhost.com/uploads/IMG_2571_result.jpg'
-                        // 'https://bugs.corp2.net/view_all_bug_page.php'
     const data = await dispatch(fetchRegister(values))
     // dispatch(fetchAuth(values))
   

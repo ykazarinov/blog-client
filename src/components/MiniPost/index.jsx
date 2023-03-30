@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import styles from './MiniPost.module.scss';
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
+import axios from "../../axios";
 
 
 export const MiniPost = ({
@@ -18,7 +19,7 @@ export const MiniPost = ({
   imageUrl,
   user,
   viewsCount,
-  commentsCount,
+  // commentsCount,
   tags,
   children,
   isFullPost,
@@ -26,9 +27,27 @@ export const MiniPost = ({
 
 }) => {
   const dispatch = useDispatch()
+  const [commentsCount, setCommentsCount] = React.useState(0)
+
+
+  React.useEffect(()=>{
+    if(id){
+       axios.get(`/posts/${id}/comments`).then(res => {
+      setCommentsCount(res.data.length)
+
+    }).catch(err => {
+      console.warn(id, err)
+      alert('Error getting comments')
+    })
+    }
+   
+  }, [id])
+
   if (isLoading) {
     return <PostSkeleton />;
   }
+
+
 
 
 

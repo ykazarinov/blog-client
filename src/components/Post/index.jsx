@@ -12,6 +12,7 @@ import styles from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
 import { fetchRemovePost } from '../../redux/slices/posts';
+import axios from "../../axios";
 
 export const Post = ({
   id,
@@ -20,7 +21,7 @@ export const Post = ({
   imageUrl,
   user,
   viewsCount,
-  commentsCount,
+  // commentsCount,
   tags,
   children,
   isFullPost,
@@ -28,6 +29,22 @@ export const Post = ({
   isEditable,
 }) => {
   const dispatch = useDispatch()
+
+  const [commentsCount, setCommentsCount] = React.useState(0)
+
+  React.useEffect(()=>{
+    if(id){
+       axios.get(`/posts/${id}/comments`).then(res => {
+      setCommentsCount(res.data.length)
+
+    }).catch(err => {
+      console.warn(id, err)
+      alert('Error getting comments')
+    })
+    }
+   
+  }, [id])
+
   if (isLoading) {
     return <PostSkeleton />;
   }
