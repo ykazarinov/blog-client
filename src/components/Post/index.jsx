@@ -6,7 +6,7 @@ import DeleteIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
@@ -31,6 +31,11 @@ export const Post = ({
   const dispatch = useDispatch()
 
   const [commentsCount, setCommentsCount] = React.useState(0)
+  const {comments} = useSelector(state => state.comments)
+
+  React.useEffect(()=>{
+
+  }, [])
 
   React.useEffect(()=>{
     if(id){
@@ -43,7 +48,7 @@ export const Post = ({
     })
     }
    
-  }, [id])
+  }, [id, comments])
 
   if (isLoading) {
     return <PostSkeleton />;
