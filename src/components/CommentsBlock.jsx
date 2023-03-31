@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { SideBlock } from "./SideBlock";
 import {ListItem} from "@mui/material";
@@ -10,6 +10,11 @@ import { List } from "@mui/material";
 import {Skeleton} from "@mui/material";
 
 export const CommentsBlock = ({ items, children, isLoading = true }) => {
+
+  // useEffect(()=>{
+
+  // },[items])
+
   return (
     <SideBlock title="Комментарии">
       <List>

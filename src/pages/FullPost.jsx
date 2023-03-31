@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import axios from "../axios";
 import { Post } from "../components/Post";
-import { Index } from "../components/AddComment";
+import { AddComment } from "../components/AddComment";
 import { CommentsBlock } from "../components/CommentsBlock";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import reactMarkdown from "react-markdown";
@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchPostComments } from '../redux/slices/comments';
 
 export const FullPost = () => {
-  const [data, setData] = React.useState()
+  const [currentPost, setCurrentPost] = React.useState()
   const [isLoading, setIsLoading] = React.useState(true)
   const {id} = useParams()
   const dispatch = useDispatch()
@@ -23,7 +23,7 @@ export const FullPost = () => {
     dispatch(fetchPostComments(id))
 
     axios.get(`/posts/${id}`).then(res => {
-      setData(res.data)
+      setCurrentPost(res.data)
       setIsLoading(false)
     }).catch(err => {
       console.warn(err)
@@ -31,16 +31,7 @@ export const FullPost = () => {
     })
   }, [])
 
-  // React.useEffect(()=>{
-    
-  //   axios.get(`/posts/${id}/comments`).then(res => {
-  //     setData(res.data)
-  //     setIsLoading(false)
-  //   }).catch(err => {
-  //     console.warn(err)
-  //     alert('Error getting post')
-  //   })
-  // }, [])
+  const {data} = useSelector(state => state.auth)
 
   if (isLoading){
     return <Post isLoading={isLoading} isFullPost />
@@ -49,23 +40,25 @@ export const FullPost = () => {
   return (
     <>
       <Post
-        id={data._id}
-        title={data.title}
-        imageUrl={data.imageUrl ? `http://localhost:4444${data.imageUrl}`: ''}
-        user={data.user}
-        createdAt={data.createdAt}
-        viewsCount={data.viewsCount}
+        id={currentPost._id}
+        title={currentPost.title}
+        imageUrl={currentPost.imageUrl ? `http://localhost:4444${currentPost.imageUrl}`: ''}
+        user={currentPost.user}
+        createdAt={currentPost.createdAt}
+        viewsCount={currentPost.viewsCount}
         commentsCount={3}
-        tags={data.tags}
+        tags={currentPost.tags}
         isFullPost
       >
-        <ReactMarkdown children={data.text} />
+        <ReactMarkdown children={currentPost.text} />
       </Post>
       <CommentsBlock
         items={comments.items}
         isLoading={isCommentsLoading}
       >
-        <Index />
+        {data &&
+        <AddComment />
+        }
       </CommentsBlock>
     </>
   );
