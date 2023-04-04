@@ -4,6 +4,7 @@ import Container from "@mui/material/Container";
 import { useDispatch, useSelector } from 'react-redux';
 import { Header } from "./components";
 import { Home, FullPost, Registration, AddPost, Login, TagPage } from "./pages";
+import  Dashboard  from "./pages/Dashboard"
 import { fetchAuthMe, selectIsAuth } from './redux/slices/auth';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
        <Route path="/login" element={<Login />} />
        <Route path="/register" element={<Registration />} />
        <Route path="/tag/:tag" element={<TagPage />}  />
+       <Route path="/admin" element={<Dashboard />} />
        
        </Routes>
       </Container>

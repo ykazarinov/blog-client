@@ -36,19 +36,6 @@ const [newPosts, setNewPosts] = React.useState([]);
 const urlParams = window.location.search
 
 
-
-// React.useEffect(()=>{
-//   if(urlParams.sortProperty && urlParams.sortProperty === 0){
-//     // navigate(`?sortProperty=${tabIndex}`);
-//     setTabIndex(0)
-//   }else if(urlParams.sortProperty && urlParams.sortProperty === 1){
-//     setTabIndex(1)
-//   }
-//   console.log(urlParams)
-  
-// }, [])
-
-
 React.useEffect(() => {
 
   if (urlParams) {
@@ -66,18 +53,6 @@ React.useEffect(() => {
     navigate(`?sortProperty=${tabIndex}`);
   }
 },[urlParams])
-
-React.useEffect(()=>{
-  // axios.get(`/posts/${id}/`).then(res => {
-  //   setData(res.data)
-  //   setIsLoading(false)
-  // }).catch(err => {
-  //   console.warn(err)
-  //   alert('Error getting post')
-  // })
-},[])
-
-
 
 
 const handleTabChange = (event, newTabIndex) => {
@@ -122,7 +97,6 @@ const handleTabChange = (event, newTabIndex) => {
                 user={obj.user}
                 createdAt={obj.createdAt}
                 viewsCount={obj.viewsCount}
-                // commentsCount={3}
                 tags={obj.tags}
                 isEditable={userData?._id === obj.user._id}
                 key ={index}
