@@ -12,6 +12,8 @@ import { Navigate } from "react-router-dom";
 
 import styles from "./Login.module.scss";
 
+import interfaceData from "../../assets/data/interface.json"
+
 export const Login = () => {
   
 
@@ -53,27 +55,27 @@ if(isAuth) {
   return (
     <Paper classes={{ root: styles.root }} >
       <Typography classes={{ root: styles.title }} variant="h5">
-        Вход в аккаунт
+      {interfaceData.find((el) => el.lang === 'fr')?.inscription.autorisationPage.login}
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
       <TextField
         className={styles.field}
-        label="E-Mail"
+        label={interfaceData.find((el) => el.lang === 'fr')?.inscription.autorisationPage.emailPlaceholder}
         error={Boolean(errors.email?.message)}
         helperText={errors.email?.message}
         type= 'email'
-        {...register('email', {required: 'Enter your email'})}
+        {...register('email', {required: interfaceData.find((el) => el.lang === 'fr')?.inscription.autorisationPage.emailHelp})}
         fullWidth
       />
       <TextField 
         className={styles.field} 
-        label="Пароль"
+        label={interfaceData.find((el) => el.lang === 'fr')?.inscription.autorisationPage.passwordPlaceholder}
         error={Boolean(errors.email?.message)}
         helperText={errors.password?.message}
-        {...register('password', {required: 'Enter your password'})}
+        {...register('password', {required: interfaceData.find((el) => el.lang === 'fr')?.inscription.autorisationPage.passwordHelp})}
       fullWidth />
       <Button type='submit' size="large" variant="contained" fullWidth>
-        Войти
+      {interfaceData.find((el) => el.lang === 'fr')?.inscription.autorisationPage.enterButton}
       </Button>
       </form>
     </Paper>

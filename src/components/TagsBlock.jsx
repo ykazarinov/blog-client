@@ -11,9 +11,11 @@ import { Link } from "react-router-dom";
 
 import { SideBlock } from "./SideBlock";
 
+import interfaceData from "../assets/data/interface.json"
+
 export const TagsBlock = ({ items, isLoading = true }) => {
   return (
-    <SideBlock title="Тэги">
+    <SideBlock title={interfaceData.find((el) => el.lang === 'fr')?.inscription.homePage.tags}>
       <List>
         {(isLoading ? [...Array(5)] : items).map((name, i) => (
           <Link

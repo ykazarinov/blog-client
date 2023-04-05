@@ -15,18 +15,21 @@
 }
 
 .logo {
-  background-color: black;
+  // background-color: black;
   color: #fff;
-  font-weight: 700;
-  line-height: 35px;
+  // font-weight: 700;
+  // line-height: 35px;
   text-transform: uppercase;
   letter-spacing: 0.15px;
-  border-radius: 5px;
-  padding: 0 10px;
+  // border-radius: 5px;
+  // padding: 0 10px;
   text-decoration: none;
-
+  img{
+    height: 50px;
+    width: auto;
+  }
   &:hover {
-    background-color: #4361ee;
+    // background-color: #4361ee;
   }
 }
 

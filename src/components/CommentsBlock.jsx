@@ -9,6 +9,8 @@ import Divider from "@mui/material/Divider";
 import { List } from "@mui/material";
 import {Skeleton} from "@mui/material";
 
+import interfaceData from "../assets/data/interface.json"
+
 export const CommentsBlock = ({ items, children, isLoading = true }) => {
 
   // useEffect(()=>{
@@ -16,7 +18,7 @@ export const CommentsBlock = ({ items, children, isLoading = true }) => {
   // },[items])
 
   return (
-    <SideBlock title="Комментарии">
+    <SideBlock title={interfaceData.find((el) => el.lang === 'fr')?.inscription.homePage.lastComments}>
       <List>
         {(isLoading ? [...Array(5)] : items).map((obj, index) => (
           <React.Fragment key={index}>

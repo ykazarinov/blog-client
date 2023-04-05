@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import interfaceData from "../assets/data/interface.json"
 import { Tabs } from '@mui/material';
 import {Tab} from '@mui/material';
 import {Grid} from '@mui/material';
@@ -82,8 +82,8 @@ const handleTabChange = (event, newTabIndex) => {
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={tabIndex} aria-label="basic tabs example"  onChange={handleTabChange} >
-        <Tab label="Новые" />
-        <Tab label="Популярные" />
+        <Tab label={interfaceData.find((el) => el.lang === 'fr')?.inscription.homePage.newPosts} />
+        <Tab label={interfaceData.find((el) => el.lang === 'fr')?.inscription.homePage.popularPosts} />
       </Tabs>
       <Grid container spacing={4}>
         {tabIndex === 0 && (

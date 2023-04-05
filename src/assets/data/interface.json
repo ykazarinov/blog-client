@@ -1,0 +1,66 @@
+[
+  {
+    "lang": "fr",
+    "langName": "Français",
+    "inscription": {
+      "header": {
+        "sitename": "François le Coq",
+        "login": "Espace personnel",
+        "registration": "Enregistrer"
+      },
+      "menu": {
+        "dashboard": "Panneau d'administration",
+        "myProfile": "Mon profil",
+        "addPost": "Ajouter un article",
+        "settings": "Paramètres",
+        "logout": "Se déconnecter",
+        "logoutQuestion": "Êtes-vous sûr de vouloir vous déconnecter?",
+        "tooltip": "Paramètres du compte"
+
+      },
+      "homePage": {
+        "newPosts": "Nouveaux articles",
+        "popularPosts": "Articles populaires",
+        "tags": "Mots clés",
+        "lastComments": "Derniers commentaires"
+      },
+      "fullPostPage": {
+        "comments": "Commentaires",
+        "newCommentPlaceholder": "Nouveau commentaire",
+        "sendButton": "Envoyer"
+      },
+      "registrationPage": {
+        "makeAccount": "Créer un compte",
+        "fullNamePlaceholder": "Nom et prénom",
+        "emailPlaceholder": "Email",
+        "passwordPlaceholder": "Mot de passe",
+        "registrationButton": "Inscription",
+        "fullNameHelp": "Tapez nom et prenom",
+        "emailHelp": "Tapez votre email",
+        "passwordHelp": "Tapez votre mot de passe",
+        "failedToRegister": "Échec de l'inscription!",
+        "fileUploadError": "Erreur de téléchargement de fichier!",
+        "delete": "Supprimer"
+
+      },
+      "autorisationPage":{
+        "login": "Connexion",
+        "emailPlaceholder": "Email",
+        "passwordPlaceholder": "Mot de passe",
+        "enterButton": "Entrer",
+        "emailHelp": "Tapez votre Email",
+        "passwordHelp": "Tapez votre mot de passe"
+      },
+      "addPostPage": {
+        "uploadMainImage": "Télécharger l'image principale",
+        "articleTitle": "Le titre de l'article",
+        "tags": "Mots clés",
+        "enterTheText": "Saisir le texte",
+        "publishButton": "Publier",
+        "cancelButton": "Annuler"
+      }
+
+     
+    }
+  }
+]

@@ -119,7 +119,7 @@ export default function Dashboard() {
 
   React.useEffect(()=> {
     dispatch(fetchPosts())
-    console.log(process.env.REACT_APP_SUPERADMIN_ID)
+
   
   }, [])
 

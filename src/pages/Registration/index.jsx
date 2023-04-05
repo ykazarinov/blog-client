@@ -12,6 +12,8 @@ import { fetchRegister, selectIsAuth } from '../../redux/slices/auth';
 import { Navigate } from "react-router-dom";
 import {useForm} from 'react-hook-form'
 
+import interfaceData from "../../assets/data/interface.json"
+
 export const Registration = () => {
   const [imageUrl, setimageUrl] = React.useState('');
   const inputFileRef = React.useRef(null)
@@ -38,7 +40,7 @@ export const Registration = () => {
     // dispatch(fetchAuth(values))
   
     if(!data.payload){
-      return alert('Failed to register!')
+      return alert(interfaceData.find((el) => el.lang === 'fr')?.inscription.registrationPage.failedToRegister)
     }
     if('token' in data.payload){
       window.localStorage.setItem('token', data.payload.token)
@@ -56,7 +58,7 @@ export const Registration = () => {
     }
     catch(err){
       console.warn(err)
-      alert('File upload error!')
+      alert(interfaceData.find((el) => el.lang === 'fr')?.inscription.registrationPage.fileUploadError)
     }
   };
 
@@ -76,23 +78,27 @@ export const Registration = () => {
   return (
     <Paper classes={{ root: styles.root }} >
       <Typography classes={{ root: styles.title }} variant="h5">
-        Создание аккаунта
+      {interfaceData.find((el) => el.lang === 'fr')?.inscription.registrationPage.makeAccount}
       </Typography>
      
       <form onSubmit={handleSubmit(onSubmit)}>
 
 
       <div className={styles.avatar}>
-      <Button onClick={()=> inputFileRef.current.click()}>
-          <Avatar sx={{ width: 100, height: 100 }} />
+        <Button onClick={()=> inputFileRef.current.click()}>
+          {!imageUrl ? 
+          <Avatar sx={{ width: 100, height: 100 }} /> :
+          <Avatar sx={{ width: 100, height: 100 }} src={`http://localhost:4444${imageUrl}`} alt='Avatar' />
+        }
+          
         </Button>
         <input ref={inputFileRef} type="file"  onChange={handleChangeFile} hidden  />
         {imageUrl && (
         <>
         <Button variant="contained" color="error" onClick={onClickRemoveImage}>
-          Удалить
+        {interfaceData.find((el) => el.lang === 'fr')?.inscription.registrationPage.delete}
         </Button>
-         <img className={styles.image} src={`http://localhost:4444${imageUrl}`} alt="Uploaded" />
+         {/* <img className={styles.image} src={`http://localhost:4444${imageUrl}`} alt="Uploaded" /> */}
          </>
       )}
       </div>
@@ -101,27 +107,27 @@ export const Registration = () => {
      <TextField         
         error={Boolean(errors.fullName?.message)}
         helperText={errors.fullName?.message}
-        {...register('fullName', {required: 'Enter full Name'})} 
+        {...register('fullName', {required:  interfaceData.find((el) => el.lang === 'fr')?.inscription.registrationPage.fullNameHelp})} 
         className={styles.field} 
-        label="Полное имя" 
+        label={interfaceData.find((el) => el.lang === 'fr')?.inscription.registrationPage.fullNamePlaceholder} 
         fullWidth 
       />
       <TextField         
         error={Boolean(errors.email?.message)}
         helperText={errors.email?.message}
         type= 'email'
-        {...register('email', {required: 'Enter your email'})} 
+        {...register('email', {required: interfaceData.find((el) => el.lang === 'fr')?.inscription.registrationPage.emailHelp})} 
         className={styles.field} 
-        label="E-Mail" 
+        label={interfaceData.find((el) => el.lang === 'fr')?.inscription.registrationPage.emailPlaceholder}
         fullWidth 
       />
       <TextField         
         error={Boolean(errors.password?.message)}
         helperText={errors.password?.message}
         type= 'password'
-        {...register('password', {required: 'Enter your password'})} 
+        {...register('password', {required: interfaceData.find((el) => el.lang === 'fr')?.inscription.registrationPage.passwordHelp})} 
         className={styles.field} 
-        label="Пароль" 
+        label={interfaceData.find((el) => el.lang === 'fr')?.inscription.registrationPage.passwordPlaceholder}
         fullWidth 
       />
       <Button 
@@ -131,7 +137,7 @@ export const Registration = () => {
         variant="contained" 
         fullWidth
       >
-        Зарегистрироваться
+        {interfaceData.find((el) => el.lang === 'fr')?.inscription.registrationPage.registrationButton}
       </Button>
      </form>
     </Paper>
