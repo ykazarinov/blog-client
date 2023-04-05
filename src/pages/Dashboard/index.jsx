@@ -28,6 +28,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts } from '../../redux/slices/posts';
 import {Link} from 'react-router-dom'
 
+import { Navigate} from "react-router-dom";
+import { selectIsAuth } from '../../redux/slices/auth';
+
+
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -99,7 +104,10 @@ export default function Dashboard() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch()
-  const {posts, tags} = useSelector(state => state.posts)
+
+  const isAuth = useSelector(selectIsAuth)
+
+  const {data} = useSelector(state => state.auth)
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -111,8 +119,15 @@ export default function Dashboard() {
 
   React.useEffect(()=> {
     dispatch(fetchPosts())
+    console.log(process.env.REACT_APP_SUPERADMIN_ID)
   
   }, [])
+
+  if((!window.localStorage.getItem('token') && !isAuth) 
+  || data._id !== process.env.REACT_APP_SUPERADMIN_ID
+  ) {
+    return <Navigate to='/' />
+  }
 
   return (
     <Box sx={{ display: 'flex' }}>
