@@ -69,6 +69,7 @@ if(isAuth) {
       />
       <TextField 
         className={styles.field} 
+        type='password'
         label={interfaceData.find((el) => el.lang === 'fr')?.inscription.autorisationPage.passwordPlaceholder}
         error={Boolean(errors.email?.message)}
         helperText={errors.password?.message}

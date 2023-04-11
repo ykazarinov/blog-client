@@ -31,6 +31,10 @@ import {Link} from 'react-router-dom'
 import { Navigate} from "react-router-dom";
 import { selectIsAuth } from '../../redux/slices/auth';
 
+import styles from './Dashboard.module.scss';
+import logo from '../../assets/img/admin_logo.png'
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
 
 
 const drawerWidth = 240;
@@ -42,6 +46,15 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: 'hidden',
+});
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#1976d2',
+    },
+  },
 });
 
 const closedMixin = (theme) => ({
@@ -86,7 +99,7 @@ const AppBar = styled(MuiAppBar, {
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     width: drawerWidth,
-    flexShrink: 0,
+    flexShrink: 1,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
     ...(open && {
@@ -123,16 +136,19 @@ export default function Dashboard() {
   
   }, [])
 
-  if((!window.localStorage.getItem('token') && !isAuth) 
-  || data._id !== process.env.REACT_APP_SUPERADMIN_ID
+  if(!window.localStorage.getItem('token') && !isAuth 
+  
   ) {
     return <Navigate to='/' />
   }
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open}>
+
+    <ThemeProvider theme={darkTheme}>
+    <Box sx={{ display: 'flex', width: '100%'}}>
+      {/* <CssBaseline /> */}
+      
+      <AppBar position="fixed" color="primary" open={open}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -147,12 +163,13 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            <Link to='/'>Francois le Coq</Link> 
+            <Link to='/'  className={styles.logo} ><img src={logo} alt = 'François le Coq'/></Link> 
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
+      
+      <Drawer variant="permanent" open={open} >
+        <DrawerHeader >
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
@@ -216,10 +233,12 @@ export default function Dashboard() {
           ))}
         </List> */}
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 0, m: 0 }}>
-        {/* <DrawerHeader /> */}
+      <Box component="main" sx={{ flexGrow: 0, p: 2, m: 0, }}>
+     
           <EnhancedTable />
       </Box>
     </Box>
+    </ThemeProvider>
+
   );
 }

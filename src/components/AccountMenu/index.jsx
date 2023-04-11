@@ -26,6 +26,7 @@ export const AccountMenu = () => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -47,6 +48,8 @@ export const AccountMenu = () => {
       window.localStorage.removeItem('token')
     }
   };
+
+
   return (
   <>
      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -99,9 +102,13 @@ export const AccountMenu = () => {
        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
      >
-       <MenuItem onClick={goToAdmin}>
-         <Avatar /> {interfaceData.find((el) => el.lang === 'fr')?.inscription.menu.dashboard}
-       </MenuItem>
+      
+      {data && data._id === process.env.REACT_APP_SUPERADMIN_ID &&
+        <MenuItem onClick={goToAdmin}>
+          <Avatar /> {interfaceData.find((el) => el.lang === 'fr')?.inscription.menu.dashboard}
+        </MenuItem>
+      }
+      
        <MenuItem onClick={handleClose}>
          <Avatar /> {interfaceData.find((el) => el.lang === 'fr')?.inscription.menu.myProfile}
        </MenuItem>

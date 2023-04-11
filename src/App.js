@@ -26,10 +26,13 @@ function App() {
        <Route path="/login" element={<Login />} />
        <Route path="/register" element={<Registration />} />
        <Route path="/tag/:tag" element={<TagPage />}  />
-       <Route path="/admin" element={<Dashboard />} />
+       
        
        </Routes>
       </Container>
+      <Routes>
+        <Route path="/admin" element={<Dashboard />} />
+      </Routes>
     </>
   );
 }
