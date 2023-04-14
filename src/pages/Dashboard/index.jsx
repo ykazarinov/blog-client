@@ -116,11 +116,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function Dashboard() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [activeMenuItem, setActiveMenuItem] = React.useState(0) 
   const dispatch = useDispatch()
 
   const isAuth = useSelector(selectIsAuth)
 
   const {data} = useSelector(state => state.auth)
+  const {posts} = useSelector(state => state.posts)
+  const {comments} = useSelector(state => state.comments)
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -129,6 +132,64 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const postsHeadCells = [
+    {
+      id: '_id',
+      numeric: false,
+      disablePadding: true,
+      label: 'ID',
+    },
+    {
+      id: 'title',
+      numeric: false,
+      disablePadding: true,
+      label: 'Title',
+    },
+    {
+      id: 'viewsCount',
+      numeric: true,
+      disablePadding: false,
+      label: 'Views count',
+    },
+    {
+      id: 'imageUrl',
+      numeric: false,
+      disablePadding: true,
+      label: 'Image',
+    },
+    {
+      id: 'createdAt',
+      numeric: false,
+      disablePadding: true,
+      label: 'Created at',
+    },
+   
+  ];
+
+  const commentsHeadCells = [
+  
+    {
+      id: 'text',
+      numeric: false,
+      disablePadding: true,
+      label: 'Text',
+    },
+    {
+      id: 'user',
+      numeric: false,
+      disablePadding: true,
+      label: 'User',
+    },
+   
+    {
+      id: 'createdAt',
+      numeric: false,
+      disablePadding: true,
+      label: 'Created at',
+    },
+   
+  ];
 
   React.useEffect(()=> {
     dispatch(fetchPosts())
@@ -144,101 +205,83 @@ export default function Dashboard() {
 
   return (
 
-    <ThemeProvider theme={darkTheme}>
-    <Box sx={{ display: 'flex', width: '100%'}}>
-      {/* <CssBaseline /> */}
-      
-      <AppBar position="fixed" color="primary" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            <Link to='/'  className={styles.logo} ><img src={logo} alt = 'François le Coq'/></Link> 
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      
-      <Drawer variant="permanent" open={open} >
-        <DrawerHeader >
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {['Posts', 'Comments', 'Users'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
+    // <ThemeProvider theme={darkTheme}>
+      <Box sx={{ display: 'flex', width: '100%'}}>
+        {/* <CssBaseline /> */}
+        
+        <AppBar position="fixed" color="primary" open={open}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{
+                marginRight: 5,
+                ...(open && { display: 'none' }),
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap component="div">
+              <Link to='/'  className={styles.logo} ><img src={logo} alt = 'François le Coq'/></Link> 
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        
+        <Drawer variant="permanent" open={open} >
+          <DrawerHeader >
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <List>
+            {['Posts', 'Comments', 'Users'].map((text, index) => (
+              <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
                   }}
+                  selected={activeMenuItem === index}
+                  onClick={()=>setActiveMenuItem(index)}
                 >
-                  {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
-                  {index === 0 ? <ArticleIcon /> :
-                  index === 1 ? <ChatIcon /> :
-                  index === 2 ? <PeopleIcon /> : null
-                  }
-                  
-                  
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
+                    {index === 0 ? <ArticleIcon /> :
+                    index === 1 ? <ChatIcon /> :
+                    index === 2 ? <PeopleIcon /> : null
+                    }
+                    
+                    
 
 
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        {/* <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List> */}
-      </Drawer>
-      <Box component="main" sx={{ flexGrow: 0, p: 2, m: 0, }}>
-     
-          <EnhancedTable />
+                  </ListItemIcon>
+                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+        <Box component="main" sx={{ flexGrow: 1, p: 0, m: 0, backgroundColor: 'primary'}}  >
+          {
+            activeMenuItem === 0 ? <EnhancedTable headCells={postsHeadCells} tableName={'Posts'}  data={posts}/> :
+            activeMenuItem === 1 ? <EnhancedTable headCells={commentsHeadCells} tableName={'Comments'}  data={comments}/> :
+            activeMenuItem === 2 ? null : null
+          
+          }
+            
+        </Box>
       </Box>
-    </Box>
-    </ThemeProvider>
+    // </ThemeProvider>
 
   );
 }
